@@ -3,7 +3,7 @@
 A web platform that helps women and girls in Rwanda discover sports training, competitions,
 mentorship, scholarships, internships and careers, and lets verified providers publish them.
 
-- **Live app:** _add Vercel URL_
+- **Live app:** https://wista-eta.vercel.app
 - **Demo video:** _add link_
 - **SRS:** _add link_
 

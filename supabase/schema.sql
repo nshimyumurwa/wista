@@ -151,3 +151,26 @@ create policy "notifications: own update" on notifications for update using (use
 create policy "reports: logged-in users create" on reports for insert with check (reporter_id = auth.uid());
 create policy "reports: admin read" on reports for select using (is_admin());
 create policy "reports: admin update" on reports for update using (is_admin());
+
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+ RETURNS trigger
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+declare
+  r public.user_role :=
+    (case when new.raw_user_meta_data->>'role' = 'provider' then 'provider' else 'participant' end)::public.user_role;
+begin
+  insert into public.profiles (id, name, email, role, verification_status, org_name)
+  values (
+    new.id,
+    coalesce(new.raw_user_meta_data->>'name', 'New user'),
+    new.email,
+    r,
+    case when r = 'provider' then 'pending'::public.verification_status end,
+    new.raw_user_meta_data->>'org_name'
+  );
+  return new;
+end $function$;
