@@ -1,7 +1,8 @@
 import "./globals.css";
+import Nav from "../components/Nav";
 
 export const metadata = {
-  title: "WISTA – Women in Sports Talent Access",
+  title: "WISTA - Women in Sports Talent Access",
   description: "Find sports training, competitions, mentorship, scholarships and careers in Rwanda.",
 };
 
@@ -11,11 +12,7 @@ export default function RootLayout({ children }) {
       <body>
         <header className="bar">
           <a href="/" className="brand">WISTA</a>
-          <nav>
-            <a href="/">Opportunities</a>
-            <a href="/login">Log in</a>
-            <a href="/signup" className="btn">Sign up</a>
-          </nav>
+          <Nav />
         </header>
         <main>{children}</main>
       </body>
