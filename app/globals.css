@@ -44,3 +44,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 .linkbtn { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; }
 button.btn { border: 0; cursor: pointer; font: inherit; }
 a.btn { display: inline-block; }
+form.card label { display: grid; gap: 4px; font-weight: 600; }
+form.card input:not([type="checkbox"]), form.card select, form.card textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #2a3b3b; font: inherit; }
+form.card button[type="submit"] { padding: 10px; background: #c2185b; color: #fff; border: 0; border-radius: 6px; cursor: pointer; font-weight: 700; }
+main a { color: #ff8fb8; }
+.card button { padding: 6px 12px; cursor: pointer; }
