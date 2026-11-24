@@ -71,9 +71,9 @@ function Form({ profile }) {
       <label>Start date<input type="date" value={f.start_date} onChange={set("start_date")} /></label>
       <label>End date<input type="date" value={f.end_date} onChange={set("end_date")} /></label>
       <label>Application deadline<input type="date" value={f.deadline} onChange={set("deadline")} /></label>
-      <label>
-        <input type="checkbox" checked={f.allows_registration} onChange={set("allows_registration")} />{" "}
-        Participants register (instead of applying)
+      <label className="checkrow">
+        <input type="checkbox" checked={f.allows_registration} onChange={set("allows_registration")} />
+        <span>Participants register (instead of applying)</span>
       </label>
       {error && <p style={{ color: "#ff6b6b" }}>{error}</p>}
       <button type="submit" disabled={saving}>{saving ? "Publishing..." : "Publish opportunity"}</button>
