@@ -24,6 +24,16 @@ export default function ProviderDashboard() {
             )}
             <a className="btn" href="/profile">Edit provider profile</a>
           </div>
+          {profile.verification_status === "verified" && (
+            <div className="panel">
+              <h3>Manage</h3>
+              <p>
+                <a href="/provider/new">Publish an opportunity</a> ·{" "}
+                <a href="/provider/opportunities">My opportunities</a> ·{" "}
+                <a href="/provider/applicants">Applicants</a>
+              </p>
+            </div>
+          )}
         </div>
       )}
     </RoleGuard>
