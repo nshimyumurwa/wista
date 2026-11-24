@@ -1,4 +1,4 @@
-# WISTA – Women in Sports Talent Access
+# WISTA - Women in Sports Talent Access
 
 A web platform that helps women and girls in Rwanda discover sports training, competitions,
 mentorship, scholarships, internships and careers, and lets verified providers publish them.
@@ -8,8 +8,8 @@ mentorship, scholarships, internships and careers, and lets verified providers p
 - **SRS:** _add link_
 
 ## Tech stack
-- Next.js 14.2.35 (React), App Router
-- PostgreSQL 17, hosted on Supabase (database, authentication and row-level security)
+- Next.js 14 (React), App Router
+- PostgreSQL, hosted on Supabase (database, authentication and row-level security)
 - Deployed on Vercel
 
 ## Prerequisites
@@ -56,23 +56,30 @@ Never use the `service_role` key in this app.
 Tables: `profiles`, `opportunities`, `applications`, `saved_opportunities`, `notifications`, `reports`.
 
 ## Demo accounts
-_Add admin, verified provider, pending provider and participant logins here once seeded._
+Passwords are given in the submission text.
+
+| Role | Email |
+|---|---|
+| Participant | nonette@gmail.com |
+| Verified provider | ferwafa@gmail.com |
+| Administrator | teddy@gmail.com |
 
 ## Features and SRS coverage
-_Updated as each pull request is merged._
 
 | Feature | SRS | Status |
 |---|---|---|
 | Landing page and opportunity list (no login) | FR 4.1 | Done |
 | Database schema and role-based security | NFR 1, NFR 4 | Done |
-| Signup / login | FR 1 | Next |
-| Profiles | FR 2, FR 12 | Planned |
-| Publishing | FR 3 | Planned |
-| Search, filters, details | FR 4, FR 5 | Planned |
-| Save, apply / register | FR 6, FR 7 | Planned |
-| Notifications | FR 8 | Planned |
-| Admin and reports | FR 9, 10, 11 | Planned |
+| Signup and login with validation, role-based redirects | FR 1 | Done |
+| Participant and provider profiles | FR 2, FR 12 | Done |
+| Publish, list and remove opportunities (verified providers only) | FR 3 | Done |
+| Search and filters (type, location, level), details page | FR 4, FR 5 | Done |
+| Save opportunities, apply or register | FR 6, FR 7 | Done |
+| Accept or reject applicants, notification to participant | FR 8 | Done |
+| Admin verification of providers | FR 9 | Done |
+| Reports and user management | FR 10, FR 11 | Planned |
 
 ## Troubleshooting
 - **"running scripts is disabled" on Windows:** run `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` in PowerShell.
 - **"We could not load opportunities":** check the two environment variables, and make sure you ran both `schema.sql` and `grants.sql`.
+- **Login fails on the deployed site:** set the Site URL and Redirect URLs in Supabase under Authentication > URL Configuration.
