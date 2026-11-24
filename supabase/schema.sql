@@ -174,3 +174,12 @@ begin
   );
   return new;
 end $function$;
+-- PR 6: admin can verify providers; providers can read their applicants
+drop policy if exists "profiles: admin update" on profiles;
+create policy "profiles: admin update" on profiles for update using (is_admin());
+drop policy if exists "profiles: provider reads applicants" on profiles;
+create policy "profiles: provider reads applicants" on profiles for select
+  using (exists (
+    select 1 from applications a join opportunities o on o.id = a.opportunity_id
+    where a.participant_id = profiles.id and o.provider_id = auth.uid()
+  ));
