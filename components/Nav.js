@@ -12,7 +12,7 @@ export default function Nav() {
 
   return (
     <nav>
-      <a href="/">Opportunities</a>
+      <a href="/opportunities">Opportunities</a>
       {!loading && !profile && (
         <>
           <a href="/login">Log in</a>

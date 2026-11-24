@@ -7,7 +7,8 @@ export default async function Home() {
     .from("opportunities")
     .select("id, title, type, sport, location, start_date")
     .eq("status", "published")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(6);
 
   return (
     <>
@@ -17,6 +18,7 @@ export default async function Home() {
           Training, competitions, mentorship, scholarships, internships and careers for women and
           girls, all in one place. No account needed to browse.
         </p>
+        <p><a className="btn" href="/opportunities">Search all opportunities</a></p>
       </section>
 
       {error && <p className="empty">We could not load opportunities. Check your Supabase settings and try again.</p>}
@@ -30,7 +32,7 @@ export default async function Home() {
           <article className="card" key={o.id}>
             <span className="tag">{o.type}</span>
             <h3><a href={`/opportunities/${o.id}`}>{o.title}</a></h3>
-            <p className="meta">{o.sport} · {o.location}</p>
+            <p className="meta">{o.sport} &middot; {o.location}</p>
           </article>
         ))}
       </div>
