@@ -13,20 +13,27 @@ function Panel() {
 
   async function load() {
     const p = await supabase.from("profiles").select("*").order("created_at", { ascending: false });
+    if (p.error) setMsg("Could not load users: " + p.error.message);
     setUsers(p.data || []);
-    const o = await supabase
-      .from("opportunities")
-      .select("id,title,type,location,status,profiles(name,org_name)")
-      .order("created_at", { ascending: false });
+
+    const o = await supabase.from("opportunities").select("*").order("created_at", { ascending: false });
+    if (o.error) setMsg("Could not load listings: " + o.error.message);
     setOpps(o.data || []);
-    const r = await supabase
-      .from("reports")
-      .select("id,reason,status,created_at,opportunity_id,opportunities(title,status),profiles(name)")
-      .order("created_at", { ascending: false });
+
+    const r = await supabase.from("reports").select("*").order("created_at", { ascending: false });
     if (r.error) setMsg("Could not load reports: " + r.error.message);
     setReports(r.data || []);
   }
   useEffect(() => { load(); }, []);
+
+  const nameOf = (id) => {
+    const u = (users || []).find((x) => x.id === id);
+    return u ? (u.org_name || u.name) : "unknown";
+  };
+  const titleOf = (id) => {
+    const o = (opps || []).find((x) => x.id === id);
+    return o ? o.title : "Opportunity";
+  };
 
   async function setVerification(id, status) {
     const { error } = await supabase.from("profiles").update({ verification_status: status }).eq("id", id);
@@ -98,7 +105,7 @@ function Panel() {
             <div className="panel" key={o.id}>
               <h3><Link href={"/opportunities/" + o.id}>{o.title}</Link></h3>
               <p className="meta">
-                {o.type} | {o.location} | by {o.profiles?.org_name || o.profiles?.name} | <b>{o.status}</b>
+                {o.type} | {o.location} | by {nameOf(o.provider_id)} | <b>{o.status}</b>
               </p>
               {o.status === "published" ? (
                 <button className="linkbtn" onClick={() => setListing(o.id, "removed")}>Remove</button>
@@ -116,9 +123,9 @@ function Panel() {
           {(reports || []).length === 0 && <p className="empty">No reports yet.</p>}
           {(reports || []).map((r) => (
             <div className="panel" key={r.id}>
-              <h3><Link href={"/opportunities/" + r.opportunity_id}>{r.opportunities?.title || "Opportunity"}</Link></h3>
+              <h3><Link href={"/opportunities/" + r.opportunity_id}>{titleOf(r.opportunity_id)}</Link></h3>
               <p>Reason: {r.reason}</p>
-              <p className="meta">Reported by {r.profiles?.name} | <b>{r.status}</b></p>
+              <p className="meta">Reported by {nameOf(r.reporter_id)} | <b>{r.status}</b></p>
               {r.status === "open" && (
                 <>
                   <button className="btn" onClick={() => resolve(r, true)}>Remove listing</button>{" "}

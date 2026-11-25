@@ -1,4 +1,5 @@
 "use client";
+import ReportButton from "../../../components/ReportButton";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -91,6 +92,7 @@ export default function Details() {
         ) : null}
       </div>
       {msg && <p style={{ marginTop: 12 }}>{msg}</p>}
+    <ReportButton opportunityId={o.id} />
     </main>
   );
 }
